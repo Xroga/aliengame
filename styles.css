@@ -1,31 +1,141 @@
-* {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+* { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #0a0a1a; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
             overflow: hidden;
             font-family: 'Courier New', monospace;
         }
-
-        #gameContainer {
+        #game-container {
+            width: 100%;
+            max-width: 480px;
+            aspect-ratio: 9/16;
             position: relative;
+            border: 2px solid #00ff88;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+        canvas { display: block; width: 100% !important; height: 100% !important; }
+        #ui-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+        .hud-text {
+            color: #00ff88;
+            font-size: 14px;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            padding: 8px;
+            position: absolute;
+        }
+        #meters-display { top: 8px; left: 8px; }
+        #btc-display { top: 8px; right: 8px; }
+        #rank-display { top: 30px; left: 8px; font-size: 11px; }
+        #speed-display { top: 30px; right: 8px; font-size: 11px; }
+        #menu-screen, #death-screen {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            background: rgba(10, 10, 26, 0.95);
+            pointer-events: all;
+            transition: opacity 0.3s;
         }
-
-        canvas {
-            display: block;
-            background: #0a0a1a;
-            border: 2px solid #2a2a4a;
-            box-shadow: 0 0 30px rgba(0, 100, 255, 0.2);
-            max-width: 100vw;
-            max-height: 100vh;
+        #death-screen:not(.hidden) {
+            background: rgba(10, 10, 26, 0.97);
+            border: 2px solid #ff3366;
+            box-shadow: 0 0 40px rgba(255, 51, 102, 0.3);
+        }
+        #menu-screen h1 {
+            color: #00ff88;
+            font-size: 28px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.7);
+            margin-bottom: 10px;
+            letter-spacing: 4px;
+        }
+        #menu-screen .subtitle {
+            color: #88ffcc;
+            font-size: 12px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        .btn {
+            background: transparent;
+            border: 2px solid #00ff88;
+            color: #00ff88;
+            padding: 12px 40px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            cursor: pointer;
+            margin: 6px;
+            transition: all 0.2s;
+            pointer-events: all;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .btn:hover {
+            background: #00ff88;
+            color: #0a0a1a;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+        .btn-small {
+            padding: 8px 20px;
+            font-size: 12px;
+        }
+        #character-select {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .char-card {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid #00ff88;
+            padding: 8px 12px;
+            color: #00ff88;
+            font-size: 11px;
+            cursor: pointer;
+            pointer-events: all;
+            transition: all 0.2s;
+            text-align: center;
+            min-width: 80px;
+        }
+        .char-card.selected {
+            background: #00ff88;
+            color: #0a0a1a;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.6);
+        }
+        .char-card.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .char-card .cost {
+            font-size: 9px;
+            color: #ffcc00;
+        }
+        #death-screen h2 {
+            color: #ff3366;
+            font-size: 32px;
+            text-shadow: 0 0 30px rgba(255, 51, 102, 0.7);
+            margin-bottom: 10px;
+        }
+        #death-screen .stats {
+            color: #88ffcc;
+            font-size: 14px;
+            margin: 4px 0;
+        }
+        #death-screen .stats span {
+            color: #00ff88;
+        }
+        .hidden { display: none !important; }
+        @media (max-width: 480px) {
+            #game-container { max-width: 100%; border: none; }
+            .hud-text { font-size: 12px; }
+            #menu-screen h1 { font-size: 22px; }
+            .btn { padding: 10px 30px; font-size: 14px; }
         }
